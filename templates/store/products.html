@@ -1,0 +1,37 @@
+{% extends 'store/index.html' %}
+{% load static %}
+
+{% block content%}
+
+<header>
+            <div class="page-title">
+                Products
+            </div>
+            <div class="page-intro">
+                Discover our high quality products at the most reasonable prices!!
+                Avail discounts of up to 40%.
+            </div>
+</header>
+        <div class="product-items-wrapper">
+            {% for product in products %}
+            <div class="product-item">
+                <img src="{{product.image_url}}" width="329px" height="220px">
+                <div class="product-name">
+                    {{product.name}}
+                </div>
+                <div class="product-contents">
+                    <div class="product-price">
+                        Price : ${{product.price}}
+                    </div>
+                    <div>
+                        In Stock : {{product.stock}}
+                    </div>
+                </div>
+
+                <div data-product="{{product.id}}" data-action="add" class="cool-button update-cart">
+                    Add to Cart
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+{% endblock content%}

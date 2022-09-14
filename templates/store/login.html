@@ -1,0 +1,20 @@
+{% extends 'store/index.html' %}
+{% load static %}
+{% block content%}
+
+<div class="login-container">
+    <div class="form-wrapper">
+        <div class="login-title">Login</div>
+        <form method="POST" action="">
+            {% csrf_token %}
+            <input placeholder="UserName.." name="username" type="text" autocomplete="off" required>
+            <input placeholder="Password.." name="password" type="password" autocomplete="off" required>
+            <button type="submit" id="login-btn">Login &rarr;</button>
+        </form>
+        {% for message in messages%}
+            <div class="messages">{{message}}</div>
+        {% endfor %}
+        <div id="shifting">Don't have an account? <a href="{%url 'register'%}">Sign Up</a></div>
+    </div>
+</div>
+{% endblock content%}

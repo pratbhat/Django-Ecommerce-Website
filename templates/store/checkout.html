@@ -1,0 +1,103 @@
+{% extends 'store/index.html' %}
+{% load static %}
+{% block content%}
+<div class="page-title">
+    Checkout
+</div>
+<div class="checkout-container">
+    <div class="prerequisite">
+        <div class="form">
+            <form>
+                <div id="contact-info">
+                    <h3>Contact Info</h3>
+                    <input name="name" id="name" type="text" required spellcheck="false" placeholder="Name"
+                         autocomplete="off">
+                    <input name="email" id="email" type="email" required spellcheck="false" placeholder="Email Address"
+                        autocomplete="off">
+                </div>
+                <h3>Shipping Info</h3>
+                <input name="address" id="address" type="text" required spellcheck="false" placeholder="Address"
+                       autocomplete="off">
+                <input name="city" id="city" type="text" required spellcheck="false" placeholder="City"
+                       autocomplete="off">
+                <input name="state" id="state" type="text" required spellcheck="false" placeholder="State"
+                       autocomplete="off">
+                <input name="zipcode" id="zip-code" type="number" required spellcheck="false" placeholder="Zip-Code"
+                       autocomplete="off">
+            </form>
+            <button type="submit" id="submit-info">Continue &rarr;</button>
+        </div>
+        <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div class="summary-final-wrapper">
+                <div id="quantity" style="font-size:18px">Items : {{ orders.total_quantity}}</div>
+                <div id="total" style="font-size:18px">Total : ${{ orders.total_order_value}}</div>
+            </div>
+            <table class="table-contents">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th>Product</th>
+                    <th>In Cart</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in items %}
+                <tr>
+                    <td><img width="60px" height="45px" src="{{item.product.image_url}}"></td>
+                    <td>{{ item.product.name }}</td>
+                    <td>x{{item.quantity}}
+                    <td>{{item.product.price}}</td>
+                    <td>${{item.total_price}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <a class="prev-cart-btn " href="{% url 'cart' %}">
+                <div>&larr; Back to Cart</div>
+            </a>
+        </div>
+    </div>
+    <div id="make-payment">
+        <h2 id="payment-heading">PayPal Options</h2>
+        <div id="paypal-button-container"></div>
+    </div>
+
+    <!-- <button >Make Payment &rarr;</button> -->
+</div>
+<script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
+<script>
+  let total = '{{orders.total_order_value}}'
+
+  paypal.Buttons({
+
+    style: {
+        color:'blue',
+        shape:'rect'
+     },
+
+    createOrder: function(data, actions) {
+      // This function sets up the details of the transaction, including the amount and line item details.
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: parseFloat(total).toFixed(2),
+          }
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      // This function captures the funds from the transaction.
+      return actions.order.capture().then(function(details) {
+        // This function shows a transaction success message to your buyer.
+        alert('Transaction completed by ' + details.payer.name.given_name);
+      });
+    }
+  }).render('#paypal-button-container');
+  //This function displays Smart Payment Buttons on your web page.
+</script>
+<script src="{% static 'javascript/forms.js' %}">
+</script>
+{% endblock content%}

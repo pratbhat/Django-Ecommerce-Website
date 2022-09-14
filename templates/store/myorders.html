@@ -1,0 +1,47 @@
+{% extends 'store/index.html' %}
+{% load static %}
+{% block content%}
+<div class="cart-container">
+    <div class="page-title">
+        My Orders
+    </div>
+    <div class="overall-contents">
+        <a class="prev-btn " href="{% url 'products' %}">
+            <div>&larr; Continue Shopping</div>
+        </a>
+        <div class="summary-wrapper">
+            <div style="font-size:25px">Completed Orders : {{completed_orders}}</div>
+            <div style="font-size:25px">Pending Orders : {{incomplete_orders}}</div>
+            <a class="checkout-btn" href="{% url 'cart'%}">
+                <div>Cart &rarr;</div>
+            </a>
+        </div>
+    </div>
+    <div class="table-container">
+        <table class="table-contents">
+            <thead>
+            <tr>
+                <th>Transaction Id</th>
+                <th>Date Ordered</th>
+                <th>Items</th>
+                <th>Cost</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for myorder in myorders %}
+            <tr>
+
+                <td style="display:block !important;padding:12px 15px">{{myorder.transaction_id }}</td>
+                <td>{{myorder.date_ordered}}
+                <td>{{myorder.total_quantity}}</td>
+                <td>{{myorder.total_order_value}}</td>
+                <td>{{myorder.complete}}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+{% endblock content%}

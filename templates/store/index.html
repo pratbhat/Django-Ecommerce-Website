@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1">
+    <title>PyShop</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Lato&display=swap" rel="stylesheet">
+    <script>
+        var customer = '{{request.user}}';
+    </script>
+</head>
+<body>
+<div class="container">
+    <nav>
+        <div class="logo">PyShop</div>
+
+        <div class="nav-wrapper">
+            <div ><a class="nav-links" id="product" href="{% url 'products'%}">Home</a></div>
+            <div ><a class="nav-links" id="login" href="{%url 'login' %}">Login</a></div>
+            <div id="cart"><a class="nav-links" href="{% url 'cart'%}">
+                <div id="item-count-wrapper"><div class="item-count">{{ orders.total_quantity}}</div></div>
+                <img src="https://image.flaticon.com/icons/png/512/126/126083.png" width="25px" >
+            </a></div>
+            <div id = "order"><a class="nav-links" id="my-orders" href="{% url 'myorders'%}">Orders</a></div>
+        </div>
+
+        <div class="username">Hi, {{ request.user }}</div>
+    </nav>
+{% block content%}
+{% endblock content%}
+</div>
+<script src="{% static 'javascript/mechanism.js' %}"></script>
+</body>
+
+</html>

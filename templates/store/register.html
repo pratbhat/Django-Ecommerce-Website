@@ -1,0 +1,36 @@
+{% extends 'store/index.html' %}
+{% load static %}
+{% block content%}
+
+<div class="login-container">
+    <div class="form-wrapper">
+        <div class="login-title">Register</div>
+        <form method="POST" action="">
+            {% csrf_token %}
+                {{form.username}}
+                {{form.email}}
+                {{form.password1}}
+                {{form.password2}}
+
+            <button type="submit" id="login-btn">Register &rarr;</button>
+        </form>
+        <div class="form-errors">
+            {{form.errors}}
+        </div>
+
+        <div id="shifting">Already have an account? <a href="{%url 'login'%}"> Login </a></div>
+    </div>
+</div>
+<script>
+let form_input_fields = document.querySelectorAll('.form-wrapper input')
+
+form_input_fields[1].placeholder = 'Username..';
+form_input_fields[2].placeholder = 'Email..';
+form_input_fields[3].placeholder = 'Password..';
+form_input_fields[4].placeholder = 'Confirm Password..';
+
+form_input_fields[1].autocomplete = "off"
+form_input_fields[2].autocomplete = "off"
+
+</script>
+{% endblock content%}
